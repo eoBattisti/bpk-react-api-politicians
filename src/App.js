@@ -1,47 +1,90 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+
+import Caroussel from "./components/Caroussel";
+
+import politiciansService from './service/politicians';
+
 
 
 const App = () => {
   
-  const [infos, setInfos] = useState();
+  const [deputados, setDeputados] = useState([]);
+  const [partidos, setPartidos] = useState([]);
+  const [page, setPage] = useState(1);
 
-  const API = "https://dadosabertos.camara.leg.br/api/v2/deputados?pagina=1&itens=12&ordem=ASC&ordenarPor=nome";
-  
+
 
   useEffect(() => {
-    axios.get(API)
-      .then(({ data }) => {
-        setInfos(data.dados); //eslint-disable-next-line
-  }); 
+    getAllDeputados(page);//eslint-disable-next-line
+  }, [page]); 
+
+  useEffect(() =>{
+    getAllPartidos();
+  }, [])
+
+  useEffect(() => {
+    // Observe the sentinel element, when it's finded
+    // change the page's value to do a new request
+    const intersectionObserver = new IntersectionObserver((entries) => {
+      
+      if(entries.some((entry) => entry.isIntersecting)){
+        setPage((currentPageInsideState) => currentPageInsideState + 1);
+      }
+    });
+
+    intersectionObserver.observe(document.querySelector('#sentinela'));
+
+    return () => intersectionObserver.disconnect();
+
   }, [])
   
+  const getAllDeputados = async (page) =>{
+    try{
+      const auxDeputados = await politiciansService.getAllDeputados(page)
+      console.log(auxDeputados);
+      setDeputados(prevDeputados => {
+        return [...new Set([...prevDeputados, ...auxDeputados.dados])]
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-  console.log(infos);
-  if(infos.length > 0){
-      return(
-        <div>
-          <table>
-            <thead>
-              <th>Nome</th>
-              <th>Partido</th>
-              <th>UF</th>
-            </thead>
-            <tbody>
-              {infos.map((candidato, index) =>{
-                return(
-                  <tr key={index}>
-                    <td>{candidato.nome}</td>
-                    <td>{candidato.siglaPartido}</td>
-                    <td>{candidato.siglaUf}</td>
-                  </tr>
-              )})}
-            </tbody>
-          </table>
-        </div>
+  const getAllPartidos = async () => {
+    try{
+      const auxPartidos = await politiciansService.getAllPartidos();
+      setPartidos(auxPartidos);
+    } catch (e){
+      console.log(e);
+    }
+  }
+  console.log("DEPUTADOS:", deputados);
+
+  return(
+        <>
+          <Caroussel item={partidos.dados} />
+          <div>
+            <table>
+              <thead>
+                <td>Nome</td>
+                <td>Partido</td>
+                <td>UF</td>
+              </thead>
+              <tbody>
+                {deputados.map((candidato, index) =>{
+                  return(
+                    <tr key={index}>
+                      <td>{candidato.nome}</td>
+                      <td>{candidato.siglaPartido}</td>
+                      <td>{candidato.siglaUf}</td>
+                    </tr>
+                )})}
+              </tbody>
+            </table>
+            <div id="sentinela"></div>
+          </div>
+        </>
+        
       )}
-  // return(<></>)
-
-}
 
 export default App;
