@@ -9,7 +9,7 @@ export class politiciansService {
     }
 
     async getAllDeputados(page){
-        const { data } = await this.apiRef.get(`/deputados?pagina=${page}&itens=36&ordem=ASC&ordenarPor=nome`);
+        const { data } = await this.apiRef.get(`/deputados?pagina=${page}&itens=12&ordem=ASC&ordenarPor=nome`);
         return data; 
     }
 
