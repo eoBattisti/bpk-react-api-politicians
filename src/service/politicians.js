@@ -14,7 +14,12 @@ export class politiciansService {
     }
 
     async getAllPartidos(){
-        const { data } = await this.apiRef.get(`/partidos?itens=50&ordem=ASC&ordenarPor=sigla`);
+        const { data } = await this.apiRef.get(`/partidos?itens=40&ordem=ASC&ordenarPor=sigla`);
+        return data;
+    }
+
+    async getDeputadosByPartido(sigla){
+        const { data } = await this.apiRef.get(`/deputados?siglaPartido=${sigla}&itens=100&ordem=ASC&ordenarPor=nome`);
         return data;
     }
 }

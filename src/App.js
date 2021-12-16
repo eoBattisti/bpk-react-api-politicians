@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Carousel } from 'react-responsive-carousel';
-import Caroussel from "./components/Caroussel";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
+import Drawer from "@material-ui/core/Drawer";
+import Button from '@material-ui/core/Button';
+import ListIcon from '@material-ui/icons/List';
 import Divider from "@material-ui/core/Divider";
-import { Link } from 'react-router-dom';
 
 import politiciansService from './service/politicians';
-
+import ListPartidos from "./components/ListaPartidos";
 import useStyle from "./styles/style";  
 
 const App = () => {
@@ -16,7 +16,7 @@ const App = () => {
   const [deputados, setDeputados] = useState([]);
   const [partidos, setPartidos] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [state, setState] = useState(false); 
   const classes = useStyle();
 
   useEffect(() => {
@@ -26,6 +26,8 @@ const App = () => {
   useEffect(() =>{
     getAllPartidos();
   }, [])
+
+
 
   useEffect(() => {
     // Observe the sentinel element, when it's finded
@@ -58,35 +60,61 @@ const App = () => {
   const getAllPartidos = async () => {
     try{
       const auxPartidos = await politiciansService.getAllPartidos();
-      setPartidos(auxPartidos);
+      if(auxPartidos) setPartidos(auxPartidos);
     } catch (e){
       console.log(e);
     }
   }
-  console.log("DEPUTADOS:", deputados);
-  console.log("PARTIDOS", partidos.dados)
+
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+
+    setState(open);
+  }
+
+  const getDeputadosByPartido = async (sigla) =>{
+    try{
+      const auxDeputados = await politiciansService.getDeputadosByPartido(sigla);
+      if(auxDeputados) setDeputados(auxDeputados.dados);
+    } catch (e){
+      console.log(e)
+    }
+  }
+
+  const handleDeputados =  (sigla) =>{
+    getDeputadosByPartido(sigla);
+  }
+
+
+  console.log(partidos);
+  if (partidos.length === 0) return <><div id="sentinela"></div></>;
   return(
         <>
-          {/* <Carousel
-                autoPlay={true}
-                infiniteLoop={true}
-                showArrows={false}
-                showIndicators={false}
-                showStatus={false}
-                showThumbs={false}
-                stopOnHover={true}
-                width={800}>
-            <Caroussel item={partidos.dados} />
-          </Carousel> */}
-          <Grid container 
-                rowSpacing={1} 
-                columnSpacing={{ xs: 1, sm: 2, md: 3 }}
-                justifyContent="center">
+        <Button onClick={toggleDrawer(true)} startIcon={<ListIcon />}>
+        </Button>
+        <Drawer
+          anchor={'bottom'}
+          open={state}
+          onClose={toggleDrawer(false)}
+        >
+          <Box style={{ height: 250, display: "flex", padding: 6 }}>
+            <Box>
+              <ListPartidos data={partidos.dados} handleDeputados={handleDeputados} />
+            </Box>
+            <Divider orientation="vertical" variant="middle"  flexItem />
+          </Box>
+        </Drawer>
+        <Grid container 
+                rowspacing={1} 
+                columnspacing={{ xs: 1, sm: 2, md: 3 }}
+                justifycontent="center">
             {deputados.map((politico, index) =>{
                 return(
                   <Grid item className={classes.cardWrapper} key={index}>
                     <Box>
-                      <img className={classes.image} src={politico.urlFoto}></img>
+                      <img className={classes.image} src={politico.urlFoto} alt="Deputado(a)"></img>
                     </Box>
                     <Box>
                       <Typography className={classes.pageTitle} variant="h6" color="primary">
