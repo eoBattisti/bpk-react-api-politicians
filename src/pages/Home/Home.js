@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 
-
-import { Carousel } from 'react-responsive-carousel';
-import { Link } from 'react-router-dom';
-
-
-
-
 import politiciansService from '../../service/politicians';
 
 import Header from '../../components/Header/index';
 import { Container } from './styles'
-import Caroussel from '../../components/Caroussel/index';
 
 export default function Home() {
     const [loading, setLoading] = useState(false);
@@ -65,16 +56,6 @@ export default function Home() {
             console.log(e);
         }
     }
-    const handleSearch = async () => {
-        try {
-            const auxPartidos = await politiciansService.getAllPartidos();
-            setPartidos(auxPartidos);
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
-    //Defini função
 
     const getAllPartidos = async () => {
         try {
@@ -85,9 +66,23 @@ export default function Home() {
         }
     }
 
+    const getDeputadosByPartido = async (sigla) => {
+        try {
+            const auxDeputados = await politiciansService.getDeputadosByPartido(sigla);
+            if (auxDeputados) setDeputados(auxDeputados.dados);
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const handleDeputados = (sigla) => {
+        getDeputadosByPartido(sigla);
+    }
+
+
     return (
         <Container>
-            <Header handleSearch={handleSearch} />
+            <Header partidos={partidos.dados} handleDeputados={handleDeputados} />
             <Box sx={{
                 display: "flex",
                 justifyContent: "center",
@@ -123,9 +118,10 @@ export default function Home() {
                             </Card>
                         )
                     })}
-                    <div id="sentinela"></div>
 
+                    <div id="sentinela"></div>
                 </Box>
+
             </Box>
         </Container>
 

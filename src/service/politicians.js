@@ -30,6 +30,11 @@ export class politiciansService {
         return data;
 
     }
+
+    async getDeputadosByPartido(sigla) {
+        const { data } = await this.apiRef.get(`/deputados?siglaPartido=${sigla}&itens=100&ordem=ASC&ordenarPor=nome`);
+        return data;
+    }
 }
 
 export default new politiciansService();

@@ -10,7 +10,7 @@ import Divider from '@material-ui/core/Divider';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
+
 
 import { Container } from './styles';
 import Header from '../../components/Header';
@@ -160,7 +160,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -180,7 +180,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -200,7 +200,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -220,7 +220,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -240,7 +240,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -260,7 +260,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -280,7 +280,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -300,7 +300,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -320,7 +320,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -340,7 +340,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -360,7 +360,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography> {despesa.dataDocumento}</Typography>
                       <Typography> {despesa.tipoDespesa}</Typography>
-                      <Typography> R$ {despesa.valorDocumento}</Typography>
+                      <Typography> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
@@ -380,7 +380,7 @@ export default function DetailedDeputado() {
                       }}>
                       <Typography variant='body1'> {despesa.dataDocumento}</Typography>
                       <Typography variant='body1'> {despesa.tipoDespesa}</Typography>
-                      <Typography variant='body1'> R$ {despesa.valorDocumento}</Typography>
+                      <Typography variant='body1'> R$ {despesa.valorLiquido}</Typography>
                     </Box>
                     <Divider />
                   </>
