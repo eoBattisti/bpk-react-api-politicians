@@ -7,6 +7,8 @@ import ListIcon from '@material-ui/icons/List';
 import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar';
+
 
 import { Container } from './style';
 import ListPartidos from '../ListaPartidos/index';
@@ -37,19 +39,7 @@ export default function Header({ partidos, handleDeputados }) {
         <Button onClick={toggleDrawer(true)} >
           <ListIcon fontSize="large"></ListIcon>
         </Button>
-        <Drawer
-          anchor={'bottom'}
-          open={state}
-          onClose={toggleDrawer(false)}
-          style={{}}
-        >
-          <Box style={{ height: 250, display: "flex", padding: 6, background: "#212227" }}>
-            <Box style={{ margin: "0 auto" }}>
-              <Typography variant="h6" style={{ textAlign: "center", color: "#FB3640" }} >Selecione um partido</Typography>
-              <ListPartidos data={partidos} handleDeputados={handleDeputados} />
-            </Box>
-          </Box>
-        </Drawer>
+        <Navbar  open={state} onClose={toggleDrawer(false)} toggleDrawer={toggleDrawer} />
         <Typography style={{ textDecoration: "none" }} variant="h4">
           <Link style={{ textDecoration: "none" }}
             to="/">API Deputados
